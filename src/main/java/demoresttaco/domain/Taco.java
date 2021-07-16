@@ -14,11 +14,8 @@ import java.util.List;
 @Entity
 @RestResource(rel="tacos", path="tacos")
 public class Taco {
-    @NotBlank(message = "Must include name")
     private String name;
 
-    @NotNull(message="You must have at least 2 ingredients to make a taco")
-    @Size(min=2, message= "Pick a minimum of two ingredients")
     @ManyToMany(targetEntity = Ingredient.class)
     private List<Ingredient> ingredients;
 

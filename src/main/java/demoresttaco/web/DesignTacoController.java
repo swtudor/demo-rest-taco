@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path="/design", produces = "application/json")
@@ -26,17 +26,25 @@ public class DesignTacoController {
     }
 
     @GetMapping(path="/{id}", produces = "application/json")
+    @ResponseBody
     private Taco getTaco(@PathVariable Long id){
         return tacoRepository.findById(id).orElse(new Taco());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    private void postTaco(@RequestBody TacoDTO tacoDTO){
+    @ResponseBody
+    private Taco postTaco(@RequestBody TacoDTO tacoDTO){
+        // declare a list to hold ingredients
         List<Ingredient> tacoIngredients = new ArrayList<>();
+        // take the ids from teh ingredients and search the ingredients table by id, add the found ingredient objects to the list
         tacoDTO.getIngredientIds().forEach(x-> tacoIngredients.add(ingredientRepository.findById(x).orElse(null)));
+        // pass the ingredients list into our conversion method and return a new taco object
         Taco taco = tacoDTO.convertToTaco(tacoIngredients);
+        // save that new taco object in the SQL Taco table
         tacoRepository.save(taco);
+        // return the taco to the front end
+        return taco;
     }
 
 
