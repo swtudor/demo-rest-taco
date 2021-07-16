@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "Taco_order")
 //put in place for now, use later
-@RestResource(rel = "order", path = "oder")
+@RestResource(rel = "order", path = "order")
 public class Order {
 
     private String name;

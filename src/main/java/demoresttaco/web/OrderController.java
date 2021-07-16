@@ -49,5 +49,12 @@ public class OrderController {
         return orderRepository.save(order);
     }
 
+    // add endpoint to GET orders by orderId
+
+    // add endpoint to GET orders by userId
+
+    // add endpoint to PUT to existing order
+
+    // add endpoint to DELETE order
 
 }
