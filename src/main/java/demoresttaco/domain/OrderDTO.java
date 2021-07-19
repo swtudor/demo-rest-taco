@@ -1,5 +1,6 @@
 package demoresttaco.domain;
 
+import demoresttaco.data.TacoRepository;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class OrderDTO {
@@ -40,7 +42,27 @@ public class OrderDTO {
     @NotBlank(message = "ya need tacos to order tacos")
     private ArrayList<Long> tacoIds;
 
-
+    public void updateOrder(Order order, TacoRepository tacoRepo){
+        if(name != null)
+            order.setName(name);
+        if(street != null)
+            order.setStreet(street);
+        if(city != null)
+            order.setCity(city);
+        if(state != null)
+            order.setState(state);
+        if(ccNumber != null)
+            order.setCcNumber(ccNumber);
+        if(ccExpiration != null)
+            order.setCcExpiration(ccExpiration);
+        if(ccCVV != null)
+            order.setCcCVV(ccCVV);
+        if(tacoIds != null) {
+            List<Taco> tacos = new ArrayList<>();
+            tacoIds.forEach(x -> tacos.add(tacoRepo.findById(x).orElse(null)));
+            order.setTacos(tacos);
+        }
+    }
 
 
 }

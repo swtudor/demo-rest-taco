@@ -21,18 +21,53 @@
 - /design
   - POST: takes a validated Taco object
       - saves Taco object to SQL table (TACO)
-      - adds Taco object to the current order 
+      - adds Taco object to the current order
+  
+  Request Body:
+  ```json
+  {
+    "ingredientIds": ["MISA", "RTSA", "FAJT", "IMPB"],
+    "name": "sally-taco"
+  }
+  ```
     
 - /design/recent
     - GET: returns a list of most recent Taco objects
 
 - /orders/current
   - GET: takes orderId, maybe also userId as params & returns the current Order and it's taco-list
+  
 
 - /orders
   POST: takes a valid Order object and 
     -save that Order object to our TACO_ORDERS table
   
+- /orders/{orderId}
+  
+  PUT: takes a valid Order object, finds by path param ID and updates the order
+  
+
+Request body (same for POST /order & PUT /order/{orderId}):  
+```json
+{
+    "name": "Sally Taco",
+    "street": "123 Street",
+    "city": "City",
+    "state": "MO",
+    "zip": "12345",
+    "ccNumber": "1111222233334444",
+    "ccExpiration": "12/22",
+    "ccCVV": "111",
+    "userId": "1",
+    "tacoIds": [
+        1
+    ]
+}
+
+```
+
 - /registration 
     - POST: takes a valid User object and adds it to the user table
     ? possibly start a session
+
+## JSON for requests

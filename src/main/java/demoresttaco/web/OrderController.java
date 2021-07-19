@@ -7,10 +7,14 @@ import demoresttaco.domain.Order;
 import demoresttaco.domain.OrderDTO;
 import demoresttaco.domain.Taco;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="/order", produces ="application/json")
@@ -49,12 +53,54 @@ public class OrderController {
         return orderRepository.save(order);
     }
 
-    // add endpoint to GET orders by orderId
+    // GET all orders available
+    @GetMapping()
+    @ResponseBody
+    Iterable<Order> all(){
+        return orderRepository.findAll();
+    }
 
+    // add endpoint to GET an order by orderId
+    @GetMapping("/{id}")
+    @ResponseBody
+    ResponseEntity<Order> findByOrderId(@PathVariable Long id){
+        try{
+            Optional<Order> optOrder = orderRepository.findById(id);
+            if(optOrder.isPresent()){
+                return new ResponseEntity<>(optOrder.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }catch(EmptyResultDataAccessException e) {
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // still needed:
     // add endpoint to GET orders by userId
+    // add endpoint to GET /recent orders
 
-    // add endpoint to PUT to existing order
+    // add PUT endpoint to update existing order
+    @PutMapping(path="/{orderId}", consumes="application/json")
+    public Order putOrder(@RequestBody OrderDTO orderDTO) {
+        Optional<Order> order = orderRepository.findById(orderDTO.getUserId());
+        if(order.isPresent()) {
+            Order update = order.get();
+            // updateOrder method is new logic on the OrderDTO
+            orderDTO.updateOrder(update, tacoRepository);
+            return orderRepository.save(update);
+        } else
+            return null;
+    }
 
-    // add endpoint to DELETE order
+    // add endpoint to DELETE order from the table
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<String> deleteOrder(@PathVariable("orderId") Long orderId) {
+        try {
+            orderRepository.deleteById(orderId);
+            return ResponseEntity.ok().body("Succesfully deleted order number " + orderId);
+        } catch (EmptyResultDataAccessException e) {
+            return ResponseEntity.badRequest().body("Failed to delete order number " + orderId +"/n" + e.getMessage());
+        }
+    }
 
 }
