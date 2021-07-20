@@ -63,7 +63,7 @@ public class OrderController {
     // add endpoint to GET an order by orderId
     @GetMapping("/{id}")
     @ResponseBody
-    ResponseEntity<Order> findByOrderId(@PathVariable Long id){
+    public ResponseEntity<Order> findByOrderId(@PathVariable Long id){
         try{
             Optional<Order> optOrder = orderRepository.findById(id);
             if(optOrder.isPresent()){

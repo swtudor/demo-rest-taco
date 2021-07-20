@@ -30,7 +30,8 @@
     "name": "sally-taco"
   }
   ```
-    
+ 
+_to be implemented later_   
 - /design/recent
     - GET: returns a list of most recent Taco objects
 
@@ -45,9 +46,9 @@
 - /orders/{orderId}
   
   PUT: takes a valid Order object, finds by path param ID and updates the order
-  
 
 Request body (same for POST /order & PUT /order/{orderId}):  
+
 ```json
 {
     "name": "Sally Taco",
@@ -63,7 +64,6 @@ Request body (same for POST /order & PUT /order/{orderId}):
         1
     ]
 }
-
 ```
 
 - /registration 

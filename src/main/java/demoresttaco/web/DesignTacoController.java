@@ -6,6 +6,9 @@ import demoresttaco.domain.Ingredient;
 import demoresttaco.domain.Taco;
 import demoresttaco.domain.TacoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/design", produces = "application/json")
+@RequestMapping(path="/taco", produces = "application/json")
 @CrossOrigin(origins = "*")
 public class DesignTacoController {
     private TacoRepository tacoRepository;
@@ -23,12 +26,6 @@ public class DesignTacoController {
     public DesignTacoController(TacoRepository tacoRepository, IngredientRepository ingredientRepository){
         this.tacoRepository=tacoRepository;
         this.ingredientRepository=ingredientRepository;
-    }
-
-    @GetMapping(path="/{id}", produces = "application/json")
-    @ResponseBody
-    private Taco getTaco(@PathVariable Long id){
-        return tacoRepository.findById(id).orElse(new Taco());
     }
 
     @PostMapping
@@ -46,6 +43,21 @@ public class DesignTacoController {
         // return the taco to the front end
         return taco;
     }
+
+
+//    deprecated because we're adding the RepositoryRestResource annotation to the Taco class.
+//    @GetMapping(path="/{id}", produces = "application/json")
+//    @ResponseBody
+//    public EntityModel<Taco> getTacoById(@PathVariable Long id){
+//        Taco taco = tacoRepository.findById(id).orElse(null);
+//        return EntityModel.of(taco,
+//                linkTo(
+//                        methodOn(DesignTacoController.class).getTacoById(id)
+//                ).withSelfRel(),
+//                linkTo(
+//                        methodOn(DesignTacoController.class).allTacos()
+//                ).withRel("design"));
+//    }
 
 
 }

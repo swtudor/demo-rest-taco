@@ -1,6 +1,6 @@
 create table if not exists User(
     id identity,
-    username varchar(20) not null,
+    username varchar(20) not null unique,
     password varchar(500) not null,
     fullname varchar(50) not null,
     street varchar(30) not null,
