@@ -6,9 +6,6 @@ import demoresttaco.domain.Ingredient;
 import demoresttaco.domain.Taco;
 import demoresttaco.domain.TacoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.EntityModel;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 

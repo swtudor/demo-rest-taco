@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable();
 
-                hamburglar.headers().frameOptions().disable();
+        hamburglar.headers().frameOptions().disable();
     }
 
     @Bean
@@ -61,14 +61,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-
         auth
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(encoder())
                 .and()
                 .inMemoryAuthentication()
                 .withUser("admin").password(encoder().encode("adminPass")).roles("KETCHUP");
-
     }
-
 }
