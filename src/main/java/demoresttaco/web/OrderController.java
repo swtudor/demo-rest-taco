@@ -6,10 +6,13 @@ import demoresttaco.data.UserRepository;
 import demoresttaco.domain.Order;
 import demoresttaco.domain.OrderDTO;
 import demoresttaco.domain.Taco;
+import demoresttaco.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -45,8 +48,12 @@ public class OrderController {
         Order order = new Order(dto.getName(), dto.getStreet(), dto.getCity(), dto.getState(),
                 dto.getZip(), dto.getCcNumber(), dto.getCcExpiration(), dto.getCcCVV(), orderTacos);
 
-        // finds user by id and adds to an order object
-        order.setUser(userRepository.findById(dto.getUserId()).orElse(null));
+        /// Authenticates user
+        Authentication fake = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails myUserDetails = (MyUserDetails) fake.getPrincipal();
+
+        // finds authenticated user by id and adds to an order object
+        order.setUser(userRepository.findById(myUserDetails.getId()).orElse(null));
 
         // insert new order object into Taco_Order table
         return orderRepository.save(order);

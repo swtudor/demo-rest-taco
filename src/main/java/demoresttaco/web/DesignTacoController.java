@@ -41,20 +41,4 @@ public class DesignTacoController {
         return taco;
     }
 
-
-//    deprecated because we're adding the RepositoryRestResource annotation to the Taco class.
-//    @GetMapping(path="/{id}", produces = "application/json")
-//    @ResponseBody
-//    public EntityModel<Taco> getTacoById(@PathVariable Long id){
-//        Taco taco = tacoRepository.findById(id).orElse(null);
-//        return EntityModel.of(taco,
-//                linkTo(
-//                        methodOn(DesignTacoController.class).getTacoById(id)
-//                ).withSelfRel(),
-//                linkTo(
-//                        methodOn(DesignTacoController.class).allTacos()
-//                ).withRel("design"));
-//    }
-
-
 }
