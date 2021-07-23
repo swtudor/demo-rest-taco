@@ -27,8 +27,8 @@ public class RegistrationController {
     @PostMapping
     public ResponseEntity<String> registerUser(@RequestBody Registration registration){
         User user = registration.convertUser(encoder);
-        User saved = userRepository.save(user);
-        log.info("Successfully registered user: " + saved);
-        return ResponseEntity.ok().body("User successfully registered");
+//        User saved = userRepository.save(user);
+        log.info("Successfully registered user" + user);
+        return ResponseEntity.ok().body("User saved: "+ userRepository.save(user));
     }
 }

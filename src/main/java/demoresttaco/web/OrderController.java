@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path="/order", produces ="application/json")
+@RequestMapping(path="/orders", produces ="application/json")
 @CrossOrigin(origins = "*")
 public class OrderController {
     private OrderRepository orderRepository;

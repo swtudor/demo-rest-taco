@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Entity
 // this can go on the domain object OR on the repository interface
-@RepositoryRestResource(collectionResourceRel = "taco", path="taco")
+@RepositoryRestResource(collectionResourceRel = "tacos", path="tacos")
 public class Taco {
     private String name;
 

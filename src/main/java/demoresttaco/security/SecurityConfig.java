@@ -37,29 +37,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.headers().frameOptions().disable()
-                .and()
-                .authorizeRequests().antMatchers("/","/register","/authenticate","/oauth/token").permitAll()
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/","/register","/authenticate","/oauth/token").permitAll()
                 .anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().csrf().disable()
-        //.antMatchers("/ingredients","/orders").authenticated()
-        ;
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 
-    @Autowired
-    protected void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(encoder())
-                .and()
-                .inMemoryAuthentication()
-                .withUser(adminUsername)
-                .password(encoder().encode(boozooka))
-                .authorities("BEANS");
-    }
+//    @Autowired
+//    protected void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .userDetailsService(userDetailsService)
+//                .passwordEncoder(encoder())
+//                .and()
+//                .inMemoryAuthentication()
+//                .withUser(adminUsername)
+//                .password(encoder().encode(boozooka))
+//                .authorities("BEANS");
+//    }
 
     @Bean
     public PasswordEncoder encoder() {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(path="/taco", produces = "application/json")
+@RequestMapping(path="/tacos", produces = "application/json")
 @CrossOrigin(origins = "*")
 public class DesignTacoController {
     private TacoRepository tacoRepository;

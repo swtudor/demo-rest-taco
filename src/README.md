@@ -18,7 +18,7 @@
 - orders (made of taco & users)
 
 ## endpoints
-- /design
+- /tacos
   - POST: takes a validated Taco object
       - saves Taco object to SQL table (TACO)
       - adds Taco object to the current order
@@ -30,14 +30,6 @@
     "name": "sally-taco"
   }
   ```
- 
-_to be implemented later_   
-- /design/recent
-    - GET: returns a list of most recent Taco objects
-
-- /orders/current
-  - GET: takes orderId, maybe also userId as params & returns the current Order and it's taco-list
-  
 
 - /orders
   POST: takes a valid Order object and 
@@ -47,9 +39,8 @@ _to be implemented later_
   
   PUT: takes a valid Order object, finds by path param ID and updates the order
 
-Request body (same for POST /order & PUT /order/{orderId}):  
-
-```json
+Request body (same for POST /order & PUT /order/{orderId}):
+  ```json
 {
     "name": "Sally Taco",
     "street": "123 Street",
@@ -64,10 +55,42 @@ Request body (same for POST /order & PUT /order/{orderId}):
         1
     ]
 }
+  ```
+
+- /authenticate
+    POST: takes a valid username and password, returns a JWT token
+  
+** Save the JWT token and [add to every header](https://learning.postman.com/docs/sending-requests/authorization/#bearer-token) a key: Authorization with the value: Bearer _paste token value here_
+
+Request Body to authenticate:   
+
+```json
+{
+"username":"spectacular",
+"password": "supersecure"
+}
 ```
 
-- /registration 
-    - POST: takes a valid User object and adds it to the user table
-    ? possibly start a session
+- /register 
+    POST: takes a valid User object and adds it to the user table
+  
+Request Body for registering a new user  
 
-## JSON for requests
+```json
+{
+  "username":"spectacular",
+  "password":"supersecure",
+  "fullname": "Sparkles Spectacular",
+  "street": "1234 Street",
+  "city": "Midwestern City",
+  "state": "MO",
+  "zip": "12345",
+  "phoneNumber": "3141234567"
+}
+```
+
+##_to be implemented later_##
+- /tacos/recent
+  - GET: returns a list of most recent Taco objects
+- /orders/current
+  - GET: takes orderId, maybe also userId as params & returns the current Order and it's taco-list
